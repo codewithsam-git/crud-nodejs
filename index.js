@@ -23,7 +23,7 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-app.post("/saveBooks", async (request, response) => {
+app.post("/books", async (request, response) => {
     let book = new UserModel();
     book.name = request.body.name;
     book.price = request.body.price;
@@ -31,7 +31,7 @@ app.post("/saveBooks", async (request, response) => {
     response.json({ "responseMessage": "Data Inseted Successfully", "data": doc });    
 })
 
-app.get("/getBooks", (request, response) => {
+app.get("/books", (request, response) => {
     UserModel.find({}).then((books) => {
         response.json({ "responseMessage": "Data fetched successfully", "data": books })
     })
@@ -40,7 +40,7 @@ app.get("/getBooks", (request, response) => {
         })
 })
 
-app.get("/getBookById/:id", (request, response) => {
+app.get("/books/:id", (request, response) => {
     const { id } = request.params;
     UserModel.findById(id).then((books) => {
         if (!books) {
@@ -54,7 +54,7 @@ app.get("/getBookById/:id", (request, response) => {
         })
 })
 
-app.put("/updateBookById/:id", (request, response) => {
+app.put("/books/:id", (request, response) => {
     const { id } = request.params;
     UserModel.findByIdAndUpdate(id, request.body).then((updateBook) => {
         if (!updateBook) {
@@ -71,7 +71,7 @@ app.put("/updateBookById/:id", (request, response) => {
         })
 })
 
-app.delete("/deleteBookById/:id", (request, response) => {
+app.delete("/books/:id", (request, response) => {
     const { id } = request.params;
     UserModel.findByIdAndDelete(id).then((deletedBook) => {
         if (!deletedBook) {
